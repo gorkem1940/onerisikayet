@@ -5,9 +5,9 @@ const { botOwner, botToken, botVoiceChannelID, logChannelID } = require('./ayarl
 client.on("ready", async () => {
   client.user.setPresence({ activity: { name: "ÖNERİ/ŞİKAYET İÇİN DM" } });
   let botVoiceChannel = client.channels.cache.get(botVoiceChannelID);
-  if (botVoiceChannel) botVoiceChannel.join().catch(err => console.error("Bot ses kanalına bağlanamadı!"));
+  if (botVoiceChannel) botVoiceChannel.join().catch(err => console.error("Bot ses kanalına bağlandı gerçekleştirilemedi."));
 });
-// Tanrısız yazdı kanka.
+//  Görkem tarafından oluşturulmuştur.
 
 let oneriler = new Set();
 client.on("message", async message => {
@@ -32,7 +32,7 @@ client.on("message", async message => {
   let koruma = await client.chatKoruma(message);
   if (message.channel.type === "dm" && (koruma == null || koruma == undefined || koruma == false)) {
     if (oneriler.has(message.author.id)) return;
-    let embed = new Discord.MessageEmbed().setColor("PURPLE").addField("Yeni bir öneri geldi ^^ ", `${message.content ? message.content.slice(0, 900) : ""}\n\n\`Öneriyi yapan:\` ${message.author}`);
+    let embed = new Discord.MessageEmbed().setColor("PURPLE").addField("Yeni bir öneri geldi. ", `${message.content ? message.content.slice(0, 900) : ""}\n\n\`Öneriyi yapan:\` ${message.author}`);
     if (message.attachments.first() && message.attachments.first().url) embed.setImage(message.attachments.first().url);
     message.channel.send("Önerin başarıyla iletildi. Bir daha öneri yapmak için **10 dakika** bekledikten sonra yapabileceksin.");
     client.channels.cache.get(logChannelID).send(embed);
